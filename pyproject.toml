@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "setorra"
+version = "0.1.0"
+description = "Setorra SDK (formerly Tisac): Agent run capture, policy enforcement, and auditor-ready evidence with privacy-first redaction"
+authors = ["Tisac Team <dev@tisac.local>"]
+readme = "README.md"
+packages = [{ include = "setorra" }]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+pyyaml = "^6.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+ruff = "^0.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"

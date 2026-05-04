@@ -1,0 +1,71 @@
+{
+  "version": "2025-10-28",
+  "metadata": {
+    "owner": "enterprise-security",
+    "description": "Enterprise chat policy: block data exfiltration and destructive requests"
+  },
+  "sdk": {
+    "decision": "allow",
+    "fail_mode": "fail-open"
+  },
+  "defaults": {
+    "decision": "allow",
+    "fail_mode": "fail-closed"
+  },
+  "actions": {
+    "agent.invoke": {
+      "default_decision": "allow",
+      "fail_mode": "fail-open",
+      "rules": [
+        {
+          "id": "block-delete-my-account",
+          "decision": "deny",
+          "match": { "parameters.inputs.prompt": { "contains": "delete my account" } },
+          "rationale": "Explicit account deletion requests are blocked"
+        },
+        {
+          "id": "block-delete-account",
+          "decision": "deny",
+          "match": { "parameters.inputs.prompt": { "contains": "delete account" } },
+          "rationale": "Account deletion is not permitted via chat"
+        },
+        {
+          "id": "block-export-emails",
+          "decision": "deny",
+          "match": { "parameters.inputs.prompt": { "contains": "export customer emails" } },
+          "rationale": "Customer emails are classified and cannot be exported"
+        },
+        {
+          "id": "block-drop-database",
+          "decision": "deny",
+          "match": { "parameters.inputs.prompt": { "contains": "drop database" } },
+          "rationale": "Destructive database operations are forbidden"
+        },
+        {
+          "id": "block-rm-rf",
+          "decision": "deny",
+          "match": { "parameters.inputs.prompt": { "contains": "rm -rf" } },
+          "rationale": "Destructive filesystem commands are forbidden"
+        },
+        {
+          "id": "block-passwords",
+          "decision": "deny",
+          "match": { "parameters.inputs.prompt": { "contains": "password" } },
+          "rationale": "Password handling is not allowed in chat"
+        },
+        {
+          "id": "block-ssn",
+          "decision": "deny",
+          "match": { "parameters.inputs.prompt": { "contains": "ssn" } },
+          "rationale": "SSNs are sensitive; requests must be blocked"
+        },
+        {
+          "id": "block-credit-card",
+          "decision": "deny",
+          "match": { "parameters.inputs.prompt": { "contains": "credit card" } },
+          "rationale": "Credit card data is sensitive; requests must be blocked"
+        }
+      ]
+    }
+  }
+}

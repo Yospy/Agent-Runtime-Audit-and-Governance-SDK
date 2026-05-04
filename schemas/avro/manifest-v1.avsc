@@ -1,0 +1,49 @@
+{
+  "type": "record",
+  "name": "ManifestV1",
+  "namespace": "com.setorra.telemetry",
+  "doc": "Run-level manifest describing artifacts and integrity summary.",
+  "fields": [
+    { "name": "schema_version", "type": "string", "doc": "manifest-v1" },
+    { "name": "session_id", "type": "string" },
+
+    { "name": "context", "type": {
+      "type": "record", "name": "ManifestContext", "fields": [
+        { "name": "session_id", "type": "string" },
+        { "name": "env", "type": ["null", "string", {
+          "type": "record", "name": "ManifestEnvObject", "fields": []
+        }], "default": null },
+        { "name": "toolchain_version", "type": ["null", "string"], "default": null },
+        { "name": "evidence_schema_version", "type": ["null", "string"], "default": null },
+        { "name": "started_at", "type": ["null", "string"], "default": null },
+        { "name": "finished_at", "type": ["null", "string"], "default": null }
+      ]
+    }},
+
+    { "name": "produced_at", "type": "string" },
+    { "name": "hash_alg", "type": "string", "doc": "e.g., sha256-v1" },
+
+    { "name": "objects", "type": {
+      "type": "array",
+      "items": {
+        "type": "record",
+        "name": "ManifestObject",
+        "fields": [
+          { "name": "name", "type": "string" },
+          { "name": "content_type", "type": "string" },
+          { "name": "sha256", "type": "string" },
+          { "name": "bytes", "type": "long" },
+          { "name": "lines", "type": ["null", "int"], "default": null }
+        ]
+      }
+    }},
+
+    { "name": "chain_summary", "type": {
+      "type": "record", "name": "ChainSummary", "fields": [
+        { "name": "first_event_hash", "type": ["null", "string"], "default": null },
+        { "name": "final_event_hash", "type": ["null", "string"], "default": null },
+        { "name": "chain_length", "type": ["null", "int"], "default": null }
+      ]
+    }, "default": { "first_event_hash": null, "final_event_hash": null, "chain_length": null } }
+  ]
+}

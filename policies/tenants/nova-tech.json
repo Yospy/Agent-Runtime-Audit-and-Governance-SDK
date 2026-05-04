@@ -1,0 +1,49 @@
+{
+  "version": "2025-10-30",
+  "metadata": {
+    "org_id": "nova-tech",
+    "owner": "enterprise-security",
+    "description": "Nova policy: deny deletes; require approval for any create"
+  },
+  "sdk": {
+    "decision": "allow",
+    "fail_mode": "fail-open"
+  },
+  "defaults": {
+    "decision": "allow",
+    "fail_mode": "fail-closed"
+  },
+  "actions": {
+    "agent.invoke": {
+      "default_decision": "allow",
+      "fail_mode": "fail-open",
+      "rules": []
+    },
+    "calendar.view": {
+      "default_decision": "allow",
+      "fail_mode": "fail-closed",
+      "rules": []
+    },
+    "calendar.delete": {
+      "default_decision": "deny",
+      "fail_mode": "fail-closed",
+      "rules": []
+    },
+    "calendar.update": {
+      "default_decision": "allow",
+      "fail_mode": "fail-closed",
+      "rules": []
+    },
+    "calendar.create": {
+      "default_decision": "require_approval",
+      "fail_mode": "fail-closed",
+      "approval": {
+        "requires_token": true,
+        "expires_in": 900,
+        "metadata": { "reason": "baseline_approval" }
+      },
+      "rules": []
+    }
+  }
+}
+

@@ -1,0 +1,71 @@
+{
+  "type": "record",
+  "name": "OutputSummaryV1",
+  "namespace": "com.setorra.telemetry",
+  "doc": "Final agent output summary for a run.",
+  "fields": [
+    { "name": "schema_version", "type": "string", "doc": "e.g., 1.3" },
+    { "name": "session_id", "type": "string" },
+    { "name": "timestamp", "type": "string", "doc": "RFC3339 with Z" },
+    { "name": "content", "type": "string" },
+
+    { "name": "prompts", "type": ["null", {
+      "type": "record", "name": "OutputPrompts", "fields": [
+        { "name": "system", "type": ["null", "string"], "default": null },
+        { "name": "user", "type": ["null", "string"], "default": null }
+      ]
+    }], "default": null },
+
+    { "name": "tools_used", "type": { "type": "array", "items": {
+      "type": "record", "name": "ToolUsage", "fields": [
+        { "name": "name", "type": "string" },
+        { "name": "status", "type": ["null", "string"], "default": null }
+      ]
+    }}, "default": [] },
+
+    { "name": "errors", "type": { "type": "array", "items": {
+      "type": "record", "name": "OutputError", "fields": [
+        { "name": "message", "type": "string" },
+        { "name": "message_preview", "type": ["null", "string"], "default": null },
+        { "name": "event_hash", "type": ["null", "string"], "default": null },
+        { "name": "event_index", "type": ["null", "int"], "default": null },
+        { "name": "timestamp", "type": ["null", "string"], "default": null },
+        { "name": "tool", "type": ["null", "string"], "default": null },
+        { "name": "error_type", "type": ["null", "string"], "default": null },
+        { "name": "auth_failed", "type": ["null", "boolean"], "default": null },
+        { "name": "error_code", "type": ["null", "int"], "default": null },
+        { "name": "reason_code", "type": ["null", "string"], "default": null }
+      ]
+    }}, "default": [] },
+
+    { "name": "errors_truncated", "type": "int", "default": 0 },
+
+    { "name": "actions", "type": ["null", {
+      "type": "record", "name": "ActionSummary", "fields": [
+        { "name": "total", "type": "int", "default": 0 },
+        { "name": "by_status", "type": { "type": "map", "values": "int" }, "default": {} },
+        { "name": "final_statuses", "type": { "type": "array", "items": {
+          "type": "record", "name": "ActionFinalStatus", "fields": [
+            { "name": "action_id", "type": "string" },
+            { "name": "action", "type": ["null", "string"], "default": null },
+            { "name": "system", "type": ["null", "string"], "default": null },
+            { "name": "idempotency_key", "type": ["null", "string"], "default": null },
+            { "name": "payload_hash", "type": ["null", "string"], "default": null },
+            { "name": "context_hash", "type": ["null", "string"], "default": null },
+            { "name": "result_hash", "type": ["null", "string"], "default": null },
+            { "name": "status", "type": ["null", "string"], "default": null },
+            { "name": "event_type", "type": ["null", "string"], "default": null }
+          ]
+        }}, "default": [] }
+      ]
+    }], "default": null },
+
+    { "name": "integrity", "type": {
+      "type": "record", "name": "OutputIntegrity", "fields": [
+        { "name": "first_event_hash", "type": ["null", "string"], "default": null },
+        { "name": "final_event_hash", "type": ["null", "string"], "default": null },
+        { "name": "chain_length", "type": ["null", "int"], "default": null }
+      ]
+    }, "default": { "first_event_hash": null, "final_event_hash": null, "chain_length": null } }
+  ]
+}

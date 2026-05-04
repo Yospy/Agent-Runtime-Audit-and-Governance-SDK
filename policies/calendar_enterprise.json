@@ -1,0 +1,60 @@
+{
+  "version": "2025-10-13",
+  "metadata": {
+    "owner": "enterprise-security",
+    "description": "Calendar enterprise policy: deny deletes; require approval for specific attendees; allow otherwise"
+  },
+  "sdk": {
+    "decision": "allow",
+    "fail_mode": "fail-open"
+  },
+  "defaults": {
+    "decision": "allow",
+    "fail_mode": "fail-closed"
+  },
+  "actions": {
+    "agent.invoke": {
+      "default_decision": "allow",
+      "fail_mode": "fail-open",
+      "rules": []
+    },
+    "calendar.view": {
+      "default_decision": "allow",
+      "fail_mode": "fail-closed",
+      "rules": []
+    },
+    "calendar.delete": {
+      "default_decision": "deny",
+      "fail_mode": "fail-closed",
+      "rules": []
+    },
+    "calendar.update": {
+      "default_decision": "allow",
+      "fail_mode": "fail-closed",
+      "rules": []
+    },
+    "calendar.create": {
+      "default_decision": "allow",
+      "fail_mode": "fail-closed",
+      "rules": [
+        {
+          "id": "ext-attendee-alice",
+          "decision": "require_approval",
+          "match": {
+            "parameters.arguments.attendees": { "contains": "alice@gmail.com" }
+          },
+          "approval": {
+            "requires_token": true,
+            "expires_in": 900,
+            "metadata": {
+              "reason": "external_attendee",
+              "approver_email_required": true
+            }
+          },
+          "rationale": "External attendee requires explicit approval"
+        }
+      ]
+    }
+  }
+}
+

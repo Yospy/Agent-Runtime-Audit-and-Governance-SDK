@@ -1,0 +1,17 @@
+version: "1.0.0"
+metadata:
+  owner: app-dev-team
+  description: "CLI chat guardrails: block WAMP topics"
+
+actions:
+  # Applies to the invoke wrapper parameters for the CLI chat.
+  # The integration passes { inputs: { prompt: ... }, kwargs: {...} }.
+  agent.invoke:
+    rules:
+      - id: block-wamp-prompt
+        effect: deny
+        match:
+          parameters.inputs.prompt:
+            contains: "wamp"
+        message: "Unauthorized"
+

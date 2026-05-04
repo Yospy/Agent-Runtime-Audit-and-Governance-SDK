@@ -1,0 +1,43 @@
+version: "1.0.0"
+metadata:
+  owner: app-dev-team
+  description: "Developer runtime guardrails for Calendar agent"
+
+actions:
+  # Applies to calendar tool executions in local integration tests.
+  calendar.tool:
+    rules:
+      - id: clamp-max-results
+        effect: modify
+        match:
+          parameters.arguments.max_results:
+            gt: 25
+        set:
+          parameters.arguments.max_results: 25
+        message: "Clamped max_results to 25"
+
+      - id: default-calendar-primary
+        effect: modify
+        match:
+          parameters.arguments.calendar_id:
+            exists: false
+        set:
+          parameters.arguments.calendar_id: "primary"
+        message: "Defaulted calendar_id to primary"
+
+      - id: sanitize-description
+        effect: modify
+        match:
+          parameters.arguments.description:
+            exists: true
+        set:
+          parameters.arguments.description: "<redacted>"
+        message: "Sanitized description"
+
+      # Example deny rule (kept simple for demo): block late-night scheduling keyword
+      - id: block-late-night-keyword
+        effect: deny
+        match:
+          parameters.arguments.summary:
+            contains: "late-night"
+        message: "Scheduling flagged as late-night is blocked by guardrails."

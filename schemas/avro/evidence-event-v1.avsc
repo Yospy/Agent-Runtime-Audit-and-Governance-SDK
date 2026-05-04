@@ -1,0 +1,113 @@
+{
+  "type": "record",
+  "name": "EvidenceEventV1",
+  "namespace": "com.setorra.telemetry",
+  "doc": "Setorra evidence event (hash-linked, SDK emitted)",
+  "fields": [
+    { "name": "schema_version", "type": "string", "doc": "e.g., 1.3" },
+    { "name": "session_id", "type": "string" },
+    { "name": "event_index", "type": "int", "doc": "0-based, strictly increasing" },
+    { "name": "event_type", "type": "string" },
+    { "name": "timestamp", "type": "string", "doc": "RFC3339 with Z" },
+
+    { "name": "agent", "type": {
+      "type": "record", "name": "AgentInfo", "fields": [
+        { "name": "name", "type": "string" },
+        { "name": "version", "type": "string" }
+      ]
+    }},
+
+    { "name": "privacy_flags", "type": { "type": "array", "items": "string" }, "default": [] },
+    { "name": "redacted_fields", "type": { "type": "array", "items": "string" }, "default": [] },
+
+    { "name": "parameters_redacted", "type": ["null", {
+      "type": "record", "name": "ParametersRedacted", "fields": [
+        { "name": "fields", "type": { "type": "array", "items": {
+          "type": "record", "name": "RedactedField", "fields": [
+            { "name": "path", "type": "string" },
+            { "name": "hash", "type": ["null", "string"], "default": null },
+            { "name": "redacted", "type": ["null", "string"], "default": null }
+          ]
+        }}, "default": [] }
+      ]
+    }], "default": null },
+
+    { "name": "context", "type": ["null", {
+      "type": "record", "name": "EventContext", "fields": [
+        { "name": "env", "type": ["null", "string", {
+          "type": "record", "name": "EnvObject", "fields": []
+        }], "default": null },
+        { "name": "organization", "type": ["null", {
+          "type": "record", "name": "OrgContext", "fields": [
+            { "name": "org_id", "type": "string" },
+            { "name": "org_name", "type": ["null", "string"], "default": null },
+            { "name": "key_id_prefix", "type": ["null", "string"], "default": null }
+          ]
+        }], "default": null },
+        { "name": "prompts", "type": ["null", {
+          "type": "record", "name": "PromptHashes", "fields": [
+            { "name": "system", "type": ["null", "string"], "default": null },
+            { "name": "user", "type": ["null", "string"], "default": null }
+          ]
+        }], "default": null },
+        { "name": "model", "type": ["null", {
+          "type": "record", "name": "ModelContext", "fields": [
+            { "name": "name", "type": ["null", "string"], "default": null },
+            { "name": "version", "type": ["null", "string"], "default": null }
+          ]
+        }], "default": null }
+      ]
+    }], "default": null },
+
+    { "name": "execution", "type": ["null", {
+      "type": "record", "name": "ExecutionInfo", "fields": [
+        { "name": "status", "type": ["null", "string"], "default": null },
+        { "name": "latency_ms", "type": ["null", "int"], "default": null },
+        { "name": "cost", "type": ["null", "double"], "default": null },
+        { "name": "error_type", "type": ["null", "string"], "default": null },
+        { "name": "error_preview", "type": ["null", "string"], "default": null },
+        { "name": "auth_failed", "type": ["null", "boolean"], "default": null },
+        { "name": "error_code", "type": ["null", "int"], "default": null },
+        { "name": "reason_code", "type": ["null", "string"], "default": null }
+      ]
+    }], "default": null },
+
+    { "name": "policy", "type": ["null", {
+      "type": "record", "name": "PolicyInfo", "fields": [
+        { "name": "version", "type": "string" },
+        { "name": "decision", "type": "string" },
+        { "name": "bundle_hash", "type": ["null", "string"], "default": null },
+        { "name": "rule_id", "type": ["null", "string"], "default": null },
+        { "name": "intent_hash", "type": ["null", "string"], "default": null },
+        { "name": "fallback_mode", "type": ["null", "string"], "default": null }
+      ]
+    }], "default": null },
+
+    { "name": "approval", "type": ["null", {
+      "type": "record", "name": "ApprovalInfo", "fields": [
+        { "name": "approver_id", "type": "string" },
+        { "name": "approved_at", "type": "string" },
+        { "name": "approver_email", "type": ["null", "string"], "default": null },
+        { "name": "signature", "type": ["null", "string"], "default": null }
+      ]
+    }], "default": null },
+
+    { "name": "guardrail", "type": ["null", {
+      "type": "record", "name": "GuardrailInfo", "fields": [
+        { "name": "version", "type": ["null", "string"], "default": null },
+        { "name": "bundle_hash", "type": ["null", "string"], "default": null },
+        { "name": "status", "type": ["null", "string"], "default": null },
+        { "name": "action", "type": ["null", "string"], "default": null },
+        { "name": "applied_rules", "type": { "type": "array", "items": "string" }, "default": [] }
+      ]
+    }], "default": null },
+
+    { "name": "integrity", "type": {
+      "type": "record", "name": "IntegrityBlock", "fields": [
+        { "name": "prev_hash", "type": ["null", "string"], "default": null },
+        { "name": "event_hash", "type": "string" },
+        { "name": "signature", "type": ["null", "string"], "default": null }
+      ]
+    }}
+  ]
+}

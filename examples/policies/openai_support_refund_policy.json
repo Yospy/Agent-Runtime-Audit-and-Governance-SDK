@@ -1,0 +1,45 @@
+{
+  "version": "openai-support-refund-v1",
+  "metadata": {
+    "description": "Demo policy for OpenAI support agent refund actions"
+  },
+  "defaults": {
+    "decision": "allow",
+    "fail_mode": "fail-closed"
+  },
+  "actions": {
+    "refund.issue": {
+      "default_decision": "allow",
+      "rules": [
+        {
+          "id": "refund-over-5000-deny",
+          "decision": "deny",
+          "match": {
+            "parameters.payload.amount": {
+              "gt": 5000
+            }
+          },
+          "rationale": "Refunds above 5000 must not be executed by the agent"
+        },
+        {
+          "id": "refund-over-500-manager-approval",
+          "decision": "require_approval",
+          "match": {
+            "parameters.payload.amount": {
+              "gt": 500
+            }
+          },
+          "approval": {
+            "expires_in": 900,
+            "requires_token": true,
+            "approver_roles": [
+              "support_manager"
+            ]
+          },
+          "rationale": "Refunds above 500 require support manager approval"
+        }
+      ]
+    }
+  }
+}
+

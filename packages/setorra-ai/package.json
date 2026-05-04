@@ -1,0 +1,48 @@
+{
+  "name": "setorra-ai",
+  "version": "0.1.0",
+  "description": "Setorra Node/TypeScript SDK (setorra-ai): handshake + organization stamping with privacy-first redaction (Python parity)",
+  "license": "UNLICENSED",
+  "private": false,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "clean": "rm -rf dist",
+    "lint": "echo 'Add ESLint later' && exit 0",
+    "test": "node -e \"console.log('No tests yet')\""
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "typescript": "^5.4.0"
+  },
+  "keywords": ["setorra", "sdk", "ai", "security", "policy", "audit", "handshake"],
+  "repository": {
+    "type": "git",
+    "url": "https://example.com/setorra.git"
+  },
+  "bugs": {
+    "url": "https://example.com/setorra/issues"
+  },
+  "homepage": "https://example.com/setorra",
+  "publishConfig": {
+    "access": "public"
+  }
+}
