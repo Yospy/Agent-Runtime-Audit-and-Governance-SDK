@@ -8,6 +8,7 @@ evidence/
 data/
 logs/
 harness_results/
+sprints/
 
 # Python
 __pycache__/
@@ -32,4 +33,3 @@ packages/*/node_modules/
 .DS_Store
 .idea/
 .vscode/
-
