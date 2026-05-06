@@ -8,6 +8,20 @@ Setorra is an SDK that integrates with AI agents to capture runs and produce aud
 
 Artifacts are written to the `evidence/` directory by default for local/dev testing.
 
+## Why Setorra
+
+AI agents are moving from suggestions to production actions. Setorra gives builders a runtime control layer for those actions: policy checks, approvals, connector execution, redaction, and tamper-evident evidence before and after an agent touches real systems.
+
+The OSS SDK focuses on local, developer-owned building blocks:
+
+- action firewall and policy enforcement
+- approval binding for risky actions
+- evidence logs and replayable integrity chains
+- redaction before persistence
+- connector and framework integration foundations
+
+Hosted dashboards, SSO, team approvals, managed retention, and enterprise policy distribution can live outside the OSS SDK.
+
 ## Quick Start (Runner — single import)
 
 - Install via Poetry (local dev):
@@ -90,6 +104,22 @@ Output prints the `session_id` and artifact paths. Logs/evidence are written to 
 - `evidence.jsonl` — event chain with action request, policy decision, approval, execution, and result
 - `output.json` — redacted summary and action counts
 - `manifest.json` — artifact hashes and chain summary
+
+## Contributing
+
+Contributors can improve Setorra through:
+
+- connectors for real systems
+- policy and guardrail examples
+- retry, idempotency, fallback, and outcome verification
+- sandbox/dry-run executors
+- MCP gateway and framework integrations
+- evidence export, replay, and validation tooling
+- docs and examples for agent builders
+
+Start with `CONTRIBUTING.md` and `ROADMAP.md`. This project uses Apache-2.0 with DCO sign-off for contributions.
+
+Do not commit `.env`, generated `evidence/`, generated `logs/`, internal `sprints/`, dependency folders, or secrets. Use `.env.example` for safe local configuration.
 
 ### Legacy integration (supported)
 
