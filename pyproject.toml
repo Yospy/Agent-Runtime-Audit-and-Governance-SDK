@@ -12,7 +12,7 @@ pyyaml = "^6.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
-ruff = "^0.6.0"
+ruff = ">=0.6,<0.16"
 
 [build-system]
 requires = ["poetry-core>=1.8.0"]
