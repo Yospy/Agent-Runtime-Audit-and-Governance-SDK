@@ -6,7 +6,7 @@ Setorra is an SDK that integrates with AI agents to capture runs and produce aud
 - `evidence/<session_id>/evidence.jsonl` — tamper‑evident event stream (agent.started → session.manifest → prompt.capture → tool/LLM/reasoning → outcome → agent.finished)
 - `evidence/<session_id>/manifest.json` — sizes, hashes, and chain summary (commit marker)
 
-Artifacts are written to the `evidence/` directory by default for local/dev testing.
+Artifacts are written to the local `evidence/` directory by default for local/dev testing. The OSS SDK does not upload logs, evidence, prompts, payloads, or summaries anywhere unless you explicitly configure a backend/control-plane integration.
 
 ## Why Setorra
 
@@ -105,6 +105,8 @@ Output prints the `session_id` and artifact paths. Logs/evidence are written to 
 - `output.json` — redacted summary and action counts
 - `manifest.json` — artifact hashes and chain summary
 
+These files stay on local storage by default.
+
 ## Contributing
 
 Contributors can improve Setorra through:
@@ -140,6 +142,8 @@ print("session:", result.session_id)
 ### Optional: Link SDK to your backend (handshake)
 
 Provide just an API key and a backend URL; the SDK will authenticate once and stamp your tenant identity (`org_id`) onto all evidence. This does not change enforcement, redaction, or integrity — it only adds tenant context.
+
+This is optional. Without backend configuration, Setorra remains local-first and writes evidence only to local storage.
 
 - `SETORRA_API_KEY` – your developer API key (required to enable handshake)
 - `SETORRA_BACKEND` – backend base URL for the control plane (e.g., `http://127.0.0.1:8081` for local)

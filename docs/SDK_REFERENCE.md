@@ -1228,6 +1228,8 @@ The `manifest.json` file contains:
 
 **Default Directory:** `evidence/` (relative to current working directory)
 
+By default, Setorra stores evidence artifacts on local storage only. The OSS SDK does not upload logs, evidence, prompts, payloads, or summaries anywhere unless you explicitly configure a backend/control-plane integration.
+
 **Environment Variables:**
 - `SETORRA_STORAGE_DIR`: Override storage directory path
 
@@ -1553,6 +1555,8 @@ def verify_chain(evidence_path: Path) -> bool:
 ### Backend Handshake
 
 Link SDK to backend control plane:
+
+This is optional. Without backend configuration, Setorra remains local-first and writes evidence only to local storage.
 
 ```python
 import os
