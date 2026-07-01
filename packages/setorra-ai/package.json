@@ -30,7 +30,7 @@
   "sideEffects": false,
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^20.12.12",
+    "@types/node": "^26.1.0",
     "typescript": "^5.4.0"
   },
   "keywords": ["setorra", "sdk", "ai", "security", "policy", "audit", "handshake"],
